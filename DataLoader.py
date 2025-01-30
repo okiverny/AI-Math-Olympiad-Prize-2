@@ -9,6 +9,9 @@ class MathProblemsDataset:
     def get_data(self) -> dict:
         return self.ds
 
+    def get_size(self) -> int:
+        return len(self.ds)
+
     def get_problem(self, idx : int) -> str:
         return self.ds['problem'][idx]
 
