@@ -2,15 +2,11 @@ import pandas as pd
 import numpy as np
 from umap import UMAP
 from hdbscan import HDBSCAN
-from typing import List
+from sklearn.cluster import KMeans
 
 
 class TextClustering:
-    def __init__(
-        self,
-        dim_red_model,
-        cluster_model,
-    ) -> None:
+    def __init__(self, dim_red_model : UMAP, cluster_model : HDBSCAN | KMeans) -> None:
         """
         Performs clustering of texts on reduced embeddings dimension
         Args:
