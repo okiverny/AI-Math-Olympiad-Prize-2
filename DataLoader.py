@@ -2,7 +2,7 @@ from datasets import load_dataset, Dataset
 from typing import Dict, List
 
 class MathProblemsDataset:
-    def __init__(self, dataset_name : str, partition_name: str):
+    def __init__(self, dataset_name: str, partition_name: str):
         self.data_partition = partition_name
         self.__ds = load_dataset(dataset_name, split=partition_name).remove_columns("messages")
 

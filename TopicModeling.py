@@ -51,12 +51,12 @@ class TextClustering:
         """
         def objective(trial):
             # Suggest hyperparameters for UMAP
-            n_neighbors = trial.suggest_int("n_neighbors", 5, 50)
-            min_dist = trial.suggest_float("min_dist", 0.0, 0.99)
-            n_components = trial.suggest_int("n_components", 2, 50)
+            n_neighbors = trial.suggest_int("n_neighbors", 40, 400)
+            min_dist = trial.suggest_float("min_dist", 0.0, 0.1)
+            n_components = trial.suggest_int("n_components", 5, 10)
 
             # Create a new UMAP model with suggested parameters
-            umap_model = UMAP(n_neighbors=n_neighbors, min_dist=min_dist, n_components=n_components, random_state=42)
+            umap_model = UMAP(n_neighbors=n_neighbors, min_dist=min_dist, n_components=n_components, metric='cosine', random_state=42)
 
             # Reduce embeddings
             reduced_embeddings = umap_model.fit_transform(text_embeddings)
@@ -77,10 +77,20 @@ class TextClustering:
         study.optimize(objective, n_trials=n_trials)
 
         # Best parameters
+        trial = study.best_trial
         best_params = study.best_params
         print(f"Best UMAP parameters: {best_params}")
 
+        print('Number of finished trials: ', len(study.trials))
+        print('Best trial:')
+        print('   Trial id:', trial.number)
+        print('   Score:', trial.value)
+        print('Params:')
+
+        for key, value in trial.params.items():
+            print('   {}: {}'.format(key, value))
+
         # Update the mapper model with best parameters
-        self.mapper_model = UMAP(**best_params, random_state=42)
+        self.mapper_model = UMAP(**best_params, metric='cosine', random_state=42)
 
         return best_params
