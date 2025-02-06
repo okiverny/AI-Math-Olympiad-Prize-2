@@ -3,8 +3,11 @@ import numpy as np
 from umap import UMAP
 from hdbscan import HDBSCAN
 from sklearn.cluster import KMeans
+from bertopic import BERTopic
+from sentence_transformers import SentenceTransformer
 from sklearn.metrics import mean_squared_error
 import optuna
+from typing import List
 
 class TextClustering:
     def __init__(self, mapper_model: UMAP, cluster_model: HDBSCAN | KMeans) -> None:
@@ -16,7 +19,8 @@ class TextClustering:
         """
         self.mapper_model = mapper_model
         self.cluster_model = cluster_model
-        self.reduced_embeddings : np.ndarray | None = None
+        self.topic_model: BERTopic | None = None
+        self.reduced_embeddings: np.ndarray | None = None
 
     def set_mapper(self, mapper_model: UMAP) -> None:
         self.mapper_model = mapper_model
@@ -94,3 +98,21 @@ class TextClustering:
         self.mapper_model = UMAP(**best_params, metric='cosine', random_state=42)
 
         return best_params
+
+    def fit_BERTopic(self, embedding_model: SentenceTransformer, documents: List[str], text_embeddings: np.ndarray):
+        # Train topic model with our previously defined mapper and clustering models models
+        self.topic_model = BERTopic(
+            embedding_model=embedding_model,
+            umap_model=self.mapper_model,
+            hdbscan_model=self.cluster_model,
+            verbose=True
+        )
+        
+        topics, probs = self.topic_model.fit_transform(documents, text_embeddings)
+        #print(topics)
+        #print(probs)
+
+        print(self.topic_model.get_topic(0))
+        print(self.topic_model.get_topic(1))
+        print(self.topic_model.get_topic(2))
+

@@ -1,5 +1,6 @@
 import os, sys
 import pandas as pd
+import numpy as np
 from sentence_transformers import SentenceTransformer
 from umap import UMAP
 from hdbscan import HDBSCAN
@@ -10,9 +11,11 @@ from DataEmbedding import MathDataEmbedding
 from TopicModeling import TextClustering
 from plotting import plot_clusters
 
+np.random.seed(42)
+
 def main():
     # Get data
-    mpds = MathProblemsDataset(dataset_name="AI-MO/NuminaMath-TIR", partition_name='train[:4000]')
+    mpds = MathProblemsDataset(dataset_name="AI-MO/NuminaMath-TIR", partition_name='train[:400]')
 
     dataset = mpds.data
     problems = dataset['problem']
@@ -25,8 +28,8 @@ def main():
     # Initialize TextClustering with a default UMAP and clustering model
     clustering_model = TextClustering(
         mapper_model = UMAP(n_components=5, min_dist=0.0, metric='cosine', random_state=42),
-        #cluster_model = HDBSCAN(min_cluster_size=40, metric="euclidean", cluster_selection_method="eom")
-        cluster_model = KMeans(n_clusters=4)
+        cluster_model = HDBSCAN(min_cluster_size=40, metric="euclidean", cluster_selection_method="eom")
+        #cluster_model = KMeans(n_clusters=4)
     )
 
     # Uncomment to optimize UMAP parameters (be warned this is quite expensive computationally!!)
@@ -39,10 +42,9 @@ def main():
     print(mpds.data.features)
 
     # Exemine clusters
-    for cluster in set(clusters):  # list(set(clusters)).sort()
-        print(f"======= Cluster {cluster} ==============")
-        for problem in mpds.data.filter(lambda example: example["clusters"]==cluster)['problem'][:5]:
-            print(problem)
+    mpds.exemine_clusters('clusters', show_solution=False)
+
+    clustering_model.fit_BERTopic(encoder_model, problems, problems_embedded)
 
 
     # Rerun the UMAP for a 2-dimensional plot

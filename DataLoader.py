@@ -28,3 +28,17 @@ class MathProblemsDataset:
 
     def get_solutions(self) -> List[str]:
         return self.__ds['solution']
+    
+    def exemine_clusters(self, cluster_col: str, show_solution: bool = False) -> None:
+        print(type(self.__ds[cluster_col][:5]))
+        for cluster in set(self.__ds[cluster_col]):
+            print(40*"#")
+            print(f"======= Cluster {cluster} ==============")
+            print(40*"#")
+            for problem in self.__ds.filter(lambda example: example[cluster_col]==cluster).select([0,1,2,3,4]):
+                print(3*'===============', 'PROBLEM:')
+                print(problem['problem'])
+
+                if show_solution:
+                    print(3*'===============', 'SOLUTION:')
+                    print(problem['solution'])
