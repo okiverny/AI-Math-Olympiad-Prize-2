@@ -5,9 +5,11 @@ from hdbscan import HDBSCAN
 from sklearn.cluster import KMeans
 from bertopic import BERTopic
 from sentence_transformers import SentenceTransformer
+from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.metrics import mean_squared_error
 import optuna
-from typing import List
+from typing import List, Tuple
+from math_vocab import math_words
 
 class TextClustering:
     def __init__(self, mapper_model: UMAP, cluster_model: HDBSCAN | KMeans) -> None:
@@ -99,20 +101,31 @@ class TextClustering:
 
         return best_params
 
-    def fit_BERTopic(self, embedding_model: SentenceTransformer, documents: List[str], text_embeddings: np.ndarray):
+    def BERTopic_train(self, embedding_model: SentenceTransformer, documents: List[str], text_embeddings: np.ndarray) -> Tuple[List[int], np.ndarray]:
+
+        # Create CountVercotizer  and remove stop words
+        #vectorizer_model = CountVectorizer(ngram_range=(1, 2), stop_words="english")
+        vectorizer_model = CountVectorizer(ngram_range=(1, 4), vocabulary=math_words)
+
         # Train topic model with our previously defined mapper and clustering models models
         self.topic_model = BERTopic(
             embedding_model=embedding_model,
             umap_model=self.mapper_model,
             hdbscan_model=self.cluster_model,
+            vectorizer_model=vectorizer_model,
             verbose=True
         )
         
         topics, probs = self.topic_model.fit_transform(documents, text_embeddings)
         #print(topics)
-        #print(probs)
+        print(probs)
 
-        print(self.topic_model.get_topic(0))
-        print(self.topic_model.get_topic(1))
-        print(self.topic_model.get_topic(2))
+        #print(self.topic_model.get_topic(0))
+        #print(self.topic_model.get_topic(1))
+        #print(self.topic_model.get_topic(2))
 
+        df_topics = self.topic_model.get_topic_info()
+        print(df_topics)
+        print(df_topics.Representative_Docs[1])
+
+        return topics, probs

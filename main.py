@@ -9,13 +9,17 @@ from sklearn.cluster import KMeans
 from DataLoader import MathProblemsDataset
 from DataEmbedding import MathDataEmbedding
 from TopicModeling import TextClustering
-from plotting import plot_clusters
+from plotting import (
+    plot_clusters,
+    plot_clustering_tree,
+    BERTopic_visualize_barchart
+)
 
 np.random.seed(42)
 
 def main():
     # Get data
-    mpds = MathProblemsDataset(dataset_name="AI-MO/NuminaMath-TIR", partition_name='train[:400]')
+    mpds = MathProblemsDataset(dataset_name="AI-MO/NuminaMath-TIR", partition_name='train[:4000]')
 
     dataset = mpds.data
     problems = dataset['problem']
@@ -28,7 +32,7 @@ def main():
     # Initialize TextClustering with a default UMAP and clustering model
     clustering_model = TextClustering(
         mapper_model = UMAP(n_components=5, min_dist=0.0, metric='cosine', random_state=42),
-        cluster_model = HDBSCAN(min_cluster_size=40, metric="euclidean", cluster_selection_method="eom")
+        cluster_model = HDBSCAN(min_cluster_size=400, metric="euclidean", cluster_selection_method="eom")
         #cluster_model = KMeans(n_clusters=4)
     )
 
@@ -39,12 +43,13 @@ def main():
     clusters = clustering_model.cluster_texts(problems_embedded)
 
     mpds.data = dataset.add_column(name="clusters", column=clusters)
-    print(mpds.data.features)
+    #print(mpds.data.features)
 
-    # Exemine clusters
+    # Exemine clusters (printing problems with or without solutions)
     mpds.exemine_clusters('clusters', show_solution=False)
 
-    clustering_model.fit_BERTopic(encoder_model, problems, problems_embedded)
+    classes, probs = clustering_model.BERTopic_train(encoder_model, problems, problems_embedded)
+    mpds.data = dataset.add_column(name="clusters_BERTopic", column=classes)
 
 
     # Rerun the UMAP for a 2-dimensional plot
@@ -55,9 +60,19 @@ def main():
     df = pd.DataFrame(mpds.data)
     print(df.head())
 
+    # Some illustrative plots
     df = pd.DataFrame(problems_reduced_embeddings, columns=['x', 'y'])
     df['cluster'] = [str(cl) for cl in clusters]
     plot_clusters(df)
+    print('Here...')
+    plot_clustering_tree(clustering_model.cluster_model)
+    print('Here2...')
+    BERTopic_visualize_barchart(clustering_model.topic_model, top_n_topics=3)
+
+    # My queries
+    print('Playing with queries...')
+    queries = ["This problem is related to geometry and involves triangles and circles."]
+
 
 
 if __name__ == "__main__":

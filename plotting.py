@@ -2,6 +2,7 @@ import matplotlib.pyplot as plt
 import matplotlib.cm as cm
 from itertools import cycle
 import pandas as pd
+from bertopic import BERTopic
 
 import warnings
 warnings.simplefilter(action='ignore', category=FutureWarning)
@@ -30,3 +31,16 @@ def plot_clusters(df: pd.DataFrame) -> None:
         )
     plt.legend()
     plt.savefig("clusters.png")
+
+def plot_clustering_tree(clustering_model) -> None:
+    plt.figure()
+    clustering_model.condensed_tree_.plot(select_clusters=True)
+    plt.savefig("clusters_tree.png")
+
+def BERTopic_visualize_barchart(
+        topic_model: BERTopic,
+        top_n_topics: int = 3,
+        n_words: int = 7
+) -> None:
+    fig = topic_model.visualize_barchart(top_n_topics=top_n_topics, n_words=n_words, height=700)
+    fig.write_image("topics.png")

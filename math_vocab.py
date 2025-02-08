@@ -1,8 +1,10 @@
 '''
 Collection of Math words
 '''
-## Algebra
 
+math_words = []
+
+## Algebra
 # 1. Polynomials & Factorization – Factor theorem, Vieta’s formulas, symmetric sums.
 algebra_polynomials_words = [
     "polynomial", "degree", "coefficient", "root", "factor", "theorem", "equation",
@@ -20,11 +22,12 @@ algebra_polynomials_words = [
     "substitution", "transformation", "mapping", "bijection", "surjection", "injection",
     "determinant", "matrix", "trace", "characteristic", "invariant", "eigenvalue",
     "eigenvector", "canonical", "quadratic", "cubic", "logarithm", "exponent", 
-    "multiplicity", "reduction",
+    "multiplicity", "reduction", "complex number", "real number", "imaginary number",
     "Vieta", "Newton", "Euler", "Lagrange", "Gauss", "Bezout", "Fermat",
     "Cauchy", "Galois", "Descartes", "Taylor", "Maclaurin", "Bernoulli",
     "Chebyshev", "Kronecker", "Ruffini", "Abel", "Germain", "Laplace", "Sylvester"
 ]
+math_words.extend(algebra_polynomials_words)
 
 # 2. Equations & Inequalities – Quadratic equations, functional equations, AM-GM, Cauchy-Schwarz.
 algebra_equations_inequalities_words = [
@@ -64,6 +67,7 @@ algebra_equations_inequalities_words = [
     "Newton", "Descartes", "Hilbert", "Laplace", "Abel",
     "Fermat", "Sylvester", "Noether", "Riemann", "Kronecker"
 ]
+math_words.extend(algebra_equations_inequalities_words)
 
 # 3. Sequences & Series – Arithmetic and geometric progressions, telescoping sums, recurrence relations.
 algebra_sequences_words = [
@@ -102,9 +106,9 @@ algebra_sequences_words = [
     "Dirichlet", "Stirling", "Vandermonde", "Cauchy", "Kronecker",
     "Ramanujan", "Gauss", "Laplace", "Pascal", "Catalan"
 ]
+math_words.extend(algebra_sequences_words)
 
 # 4. Number Theory – Modular arithmetic, prime numbers, divisibility rules, Diophantine equations.
-
 algebra_sequences_words = [
     # Modular Arithmetic
     "modular", "modulo", "congruence", "residue", "inverse",
@@ -141,6 +145,7 @@ algebra_sequences_words = [
     "Mersenne", "Sophie", "Lucas", "Vandermonde", "Chebyshev",
     "Kronecker", "Pascal", "Newton", "Catalan", "Waring"
 ]
+math_words.extend(algebra_sequences_words)
 
 # 5. Combinatorial Algebra – Summation identities, generating functions, binomial coefficients.
 algebra_combinatorics_words = [
@@ -176,29 +181,35 @@ algebra_combinatorics_words = [
     "Chebyshev", "Dirichlet", "Kronecker", "Gauss", "Jacobi",
     "Riemann", "Taylor", "Wallis", "Cauchy", "Titchmarsh"
 ]
+math_words.extend(algebra_combinatorics_words)
 
 ## Geometry
 # 6. Plane Geometry – Triangles, circles, cyclic quadrilaterals, similarity, congruence.
 plane_geometry_words = [
-    "triangle", "circle", "radius", "diameter", "circumference",
-    "tangent", "chord", "secant", "arc", "angle", 
-    "vertex", "side", "altitude", "median", "centroid",
-    "orthocenter", "circumcenter", "incenter", "excenter", "barycenter",
-    "equilateral", "isosceles", "scalene", "acute", "right", 
-    "obtuse", "angle bisector", "perpendicular", "parallel", "congruence",
-    "similarity", "Pythagoras", "Euclid", "concyclic", "cyclic quadrilateral",
-    "incircle", "circumcircle", "power of a point", "radical axis", "tangential quadrilateral",
-    "sine rule", "cosine rule", "law of sines", "law of cosines", "area",
-    "Heron's formula", "semiperimeter", "polygon", "quadrilateral", "rectangle",
-    "square", "parallelogram", "rhombus", "trapezoid", "kite",
-    "intersection", "altitude", "angle bisector theorem", "side bisector", "concurrency",
-    "Ceva's theorem", "Menelaus' theorem", "Euler line", "Euler's theorem", "circumradius",
-    "inradius", "external bisector", "tangent-secant theorem", "Cevian", "pedal triangle",
-    "orthic triangle", "radical center", "Miquel point", "incircle", "excircle",
-    "Niven's theorem", "similitude", "homothety", "median", "perpendicular bisector",
-    "Routh-Hurwitz", "center of mass", "proportionality", "polar line", "conjugate",
-    "cyclic", "equation", "angle sum", "segment", "intercept", "bisector", "distance"
+    "triangle", "circle", "quadrilateral", "cyclic", "similarity", "congruence", "angle", "perpendicular", "bisector", "median",
+    "altitude", "orthocenter", "centroid", "circumcenter", "incenter", "radius", "diameter", "chord", "tangent", "secant",
+    "arc", "sector", "segment", "inscribed", "circumscribed", "excircle", "incircle", "midpoint", "parallel", "intersection",
+    "perpendicular bisector", "angle bisector", "Pythagorean theorem", "trigonometry", "sine", "cosine", "tangent", "cotangent",
+    "secant line", "tangent line", "interior angle", "exterior angle", "sum of angles", "isosceles", "equilateral", "scalene",
+    "right triangle", "acute", "obtuse", "altitude foot", "Euler line", "nine-point circle", "Brocard point", "Steiner line",
+    "Feuerbach circle", "Simson line", "Menelaus theorem", "Ceva's theorem", "power of a point", "radical axis", "radical center",
+    "homothety", "dilation", "reflection", "translation", "rotation", "symmetry", "harmonic division", "cross ratio", "perspective",
+    "pole", "polar", "desargues theorem", "Pappus theorem", "Pascal's theorem", "Brianchon's theorem", "incircle-excircle theorem",
+    "equal angles", "concurrent lines", "collinear points", "circumradius", "inradius", "semi-perimeter", "area", "heron's formula",
+    "Brahmagupta's formula", "diagonal", "trapezoid", "parallelogram", "rhombus", "rectangle", "square", "kite",
+    "cyclic quadrilateral theorem", "cyclicity", "opposite angles", "equal chords", "tangent-secant theorem", "butterfly theorem",
+    "tangential quadrilateral", "bicentric quadrilateral", "perimeter", "Euler's theorem", "Apollonius theorem", "Thales theorem",
+    "Simson theorem", "Miquel theorem", "Stewart's theorem", "Mordell theorem", "Archimedean property", "tangent circles",
+    "nested circles", "concyclic points", "tangent-tangent theorem", "circle inversion", "pole-polar theorem", "tangent chord angle",
+    "curvilinear triangle", "arc midpoint", "tangency point", "Ptolemy's theorem", "Newton's theorem", "inversive geometry",
+    "constructible points", "golden ratio", "parallel postulate", "taxicab geometry", "Minkowski space", "affine geometry",
+    "projective geometry", "hyperbolic geometry", "spherical geometry", "convex hull", "barycentric coordinates",
+    "Carlyle circle", "Morley's theorem", "Steiner chain", "Johnson's theorem", "locus", "geometric mean", "Fermat's point",
+    "Napoleon's theorem", "Van Aubel's theorem", "Lemoine's theorem", "Harmonic quadrilateral", "pentagon", "hexagon",
+    "tessellation", "Hessian determinant", "Schläfli symbol", "Gergonne point", "Nagel point", "Mittenpunkt", "Malfatti circles",
+    "Hagge circle", "extracenters"
 ]
+math_words.extend(plane_geometry_words)
 
 # 7. Coordinate Geometry – Lines, conics, transformations, equations of curves.
 coordinate_geometry_words = [
@@ -222,8 +233,10 @@ coordinate_geometry_words = [
     "parameter", "line equation", "symmetric equations", "implicit equation", "explicit equation", 
     "parametric form", "hyperbola asymptote", "transformation rule", "curve fitting", 
     "graphing", "quadratic equations", "x-intercept", "y-intercept", "intersection point", 
-    "tangent line", "conic transformation", "conic form", "rational functions"
+    "tangent line", "conic transformation", "conic form", "rational functions",
+    "length"
 ]
+math_words.extend(coordinate_geometry_words)
 
 # 8. 3D (Stereo) Geometry – Spatial visualization, polyhedra, spheres, tetrahedra.
 stereo_geometry_terms = [
@@ -254,8 +267,9 @@ stereo_geometry_terms = [
     "circumscribed sphere", "planar surface", "affine map", "linear map", "3D rotation", "affine transformation", 
     "homogeneous transformation", "projective space", "symmetry group", "equator", "parallel planes", 
     "orthogonal projection", "3D coordinates", "locus", "polar surface", "cross section", "generalized polyhedron", 
-    "curved surface", "spatial reflection", "planar intersection", "line of intersection", "spatial linearity"
+    "curved surface", "spatial reflection", "planar intersection", "line of intersection", "spatial linearity", "length"
 ]
+math_words.extend(stereo_geometry_terms)
 
 # 9. Trigonometry – Law of sines and cosines, identities, trigonometric equations.
 trigonometry_terms = [
@@ -291,6 +305,7 @@ trigonometry_terms = [
     "positive angle", "negative angle", "graph of cotangent", "circle", "circular motion", "Pythagorean identity", 
     "solution set", "unit circle equation", "circle trigonometry", "sine wave properties", "cosine wave properties"
 ]
+math_words.extend(trigonometry_terms)
 
 # 10. Geometric Inequalities – Triangle inequalities, Jensen’s inequality, area bounds.
 geometric_inequalities_terms = [
@@ -320,6 +335,7 @@ geometric_inequalities_terms = [
     "uniform bounds", "degree of convexity", "concave hull", "finite difference inequality", "analytic inequality", 
     "subgradient", "inequality relation", "maximum area bound", "extreme values", "trivial inequality", "Lagrange's inequality"
 ]
+math_words.extend(geometric_inequalities_terms)
 
 ## Combinatorics
 # 11. Counting & Binomial Coefficients – Pigeonhole principle, stars and bars, combinatorial proofs.
@@ -349,6 +365,7 @@ counting_binomial_terms = [
     "multiplicative property", "factorial expansion", "expansion formula", "expansion proof", "subset problem", "modular counting", "counting method", 
     "generalized combinations", "binomial sum formula", "counting process", "optimal selection", "elementary counting principle"
 ]
+math_words.extend(counting_binomial_terms)
 
 # 12. Graph Theory – Eulerian and Hamiltonian paths, trees, graph coloring, networks.
 graph_theory_terms = [
@@ -373,6 +390,7 @@ graph_theory_terms = [
     "graph invariants", "graph dynamics", "network theory", "distance-based graph", "graph reconstruction", "radius of graph", "vertex-transitive graph", 
     "subgraph isomorphism", "graph homomorphism", "graph degree sequence", "degree sum", "algebraic graph theory", "graph decomposition theorem", "dominance relation"
 ]
+math_words.extend(graph_theory_terms)
 
 # 13. Invariants & Extremal Principle – Proof techniques using fixed properties and optimization.
 invariants_extremal_principle_terms = [
@@ -401,6 +419,7 @@ invariants_extremal_principle_terms = [
     "minimization problem", "norm-based optimization", "decay rate", "convex programming", "dual optimization theory", "gradient method", "exponentially decaying", 
     "Lagrange duality", "stochastic optimization", "multi-dimensional optimization", "constraint handling", "interior-point method", "constraint function"
 ]
+math_words.extend(invariants_extremal_principle_terms)
 
 # 14. Recursion & Generating Functions – Counting sequences, recurrence relations, Catalan numbers.
 recursion_generating_functions_terms = [
@@ -427,6 +446,7 @@ recursion_generating_functions_terms = [
     "p-adic", "recursive function call", "multidimensional recurrence", "recurrent structure", "direct sum expansion", "Euler transform", "binomial recursion", "partitioning function", 
     "modular arithmetic", "combinatorics identity", "recursive terms", "multiplying sequences", "multi-step recurrence", "complexity theory", "zero solution", "extended binomial identity"
 ]
+math_words.extend(recursion_generating_functions_terms)
 
 # 15. Probability & Expected Value – Classic probability, linearity of expectation, Markov chains.
 probability_expected_value_terms = [
@@ -453,6 +473,7 @@ probability_expected_value_terms = [
     "Poisson rate", "random variable model", "empirical measure", "expected value estimator", "multivariate distribution", "point estimate", "probability estimate", "expected frequency", 
     "probability theory model", "method of moments", "bias-variance tradeoff", "linear regression model", "covariance", "sample variance", "sample mean", "probability theory", "probability density function"
 ]
+math_words.extend(probability_expected_value_terms)
 
 ## Calculus & Advanced Topics
 # 16. Limits & Continuity – Evaluating limits, squeeze theorem, L’Hôpital’s rule.
@@ -478,6 +499,7 @@ limits_continuity_terms = [
     "local continuity", "discontinuity behavior", "singularities", "function continuity", "differentiation limits", "squeeze condition", "converging sequences", "tangent line approximation", 
     "instantaneous rate", "accelerating sequence", "limit of an infinite series", "stability of limits", "infinitesimal limits", "limit and derivative relation", "continuity condition"
 ]
+math_words.extend(limits_continuity_terms)
 
 # 17. Derivatives & Applications – Tangents, optimization, convexity, inequalities via derivatives.
 derivatives_applications_terms = [
@@ -505,6 +527,7 @@ derivatives_applications_terms = [
     "second order derivative", "function optimization problem", "partial derivative test", "derivative of inverse trigonometric", "critical value calculation", "optimization strategy", 
     "convex optimization theory", "differential constraint", "extremum points", "convexity in optimization", "differentiation formula", "concavity criteria", "second derivative approximation"
 ]
+math_words.extend(derivatives_applications_terms)
 
 # 18. Integral Calculus – Summation approximations, definite and indefinite integrals.
 integral_calculus_terms = [
@@ -533,6 +556,7 @@ integral_calculus_terms = [
     "complex integration", "integration of power functions", "bounded integral", "improper integral convergence", "integration of rational polynomials", "contour integration", 
     "non-integrable functions", "boundary value problem", "integral test", "integral approximation methods"
 ]
+math_words.extend(integral_calculus_terms)
 
 # 19. Functional Equations – Identifying functions satisfying given conditions, Cauchy’s FE, Jensen’s FE.
 functional_equations_terms = [
@@ -557,6 +581,7 @@ functional_equations_terms = [
     "continuity property", "periodicity", "function symmetry", "solution interval", "solution existence proof", "recursive equation", "equation uniqueness", "Cauchy’s proof", 
     "additive solution", "invariant function", "congruence condition", "bound of equation", "finite solution set", "recursive structure", "symmetric function", "transformation proof"
 ]
+math_words.extend(math_words)
 
 # 20. Game Theory & Strategy – Winning strategies, Nim games, Sprague-Grundy theorem.
 game_theory_terms = [
@@ -581,3 +606,6 @@ game_theory_terms = [
     "game prediction", "solution path", "optimal play", "game outcome prediction", "path analysis", "neutrally optimal strategy", "mixed Nash equilibrium", "game equilibrium", 
     "strategic decision", "game practice", "game optimization", "probabilistic strategy", "exploration vs exploitation", "risk dominance", "game setup", "game space"
 ]
+math_words.extend(game_theory_terms)
+
+math_words = list(set(math_words))
