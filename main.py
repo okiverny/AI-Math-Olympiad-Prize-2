@@ -19,7 +19,7 @@ np.random.seed(42)
 
 def main():
     # Get data
-    mpds = MathProblemsDataset(dataset_name="AI-MO/NuminaMath-TIR", partition_name='train[:4000]')
+    mpds = MathProblemsDataset(dataset_name="AI-MO/NuminaMath-TIR", partition_name='train[:40000]')
 
     dataset = mpds.data
     problems = dataset['problem']
@@ -32,7 +32,7 @@ def main():
     # Initialize TextClustering with a default UMAP and clustering model
     clustering_model = TextClustering(
         mapper_model = UMAP(n_components=5, min_dist=0.0, metric='cosine', random_state=42),
-        cluster_model = HDBSCAN(min_cluster_size=400, metric="euclidean", cluster_selection_method="eom")
+        cluster_model = HDBSCAN(min_cluster_size=400, metric="euclidean", cluster_selection_method="eom", prediction_data=True)
         #cluster_model = KMeans(n_clusters=4)
     )
 
@@ -45,12 +45,11 @@ def main():
     mpds.data = dataset.add_column(name="clusters", column=clusters)
     #print(mpds.data.features)
 
-    # Exemine clusters (printing problems with or without solutions)
-    mpds.exemine_clusters('clusters', show_solution=False)
-
-    classes, probs = clustering_model.BERTopic_train(encoder_model, problems, problems_embedded)
+    classes, probs, keywords = clustering_model.BERTopic_train(encoder_model, problems, problems_embedded)
     mpds.data = dataset.add_column(name="clusters_BERTopic", column=classes)
 
+    # Exemine clusters (printing problems with or without solutions)
+    mpds.exemine_clusters('clusters_BERTopic', show_solution=False)
 
     # Rerun the UMAP for a 2-dimensional plot
     problems_reduced_embeddings = UMAP(n_components=2, min_dist=0.0, metric='cosine', random_state=42).fit_transform(problems_embedded)
@@ -71,7 +70,13 @@ def main():
 
     # My queries
     print('Playing with queries...')
-    queries = ["This problem is related to geometry and involves triangles and circles."]
+    queries = ["This problem is related to geometry and involves triangles and circles.",
+               "This problem is related to the analysis of functions.",
+               "This problem is related to operations with complex numbers.",
+               "This problem is related to series expansions"]
+
+    print(clustering_model.topic_model.transform(queries))
+
 
 
 

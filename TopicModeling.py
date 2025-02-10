@@ -8,7 +8,7 @@ from sentence_transformers import SentenceTransformer
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.metrics import mean_squared_error
 import optuna
-from typing import List, Tuple
+from typing import List, Tuple, Dict
 from math_vocab import math_words
 
 class TextClustering:
@@ -101,7 +101,12 @@ class TextClustering:
 
         return best_params
 
-    def BERTopic_train(self, embedding_model: SentenceTransformer, documents: List[str], text_embeddings: np.ndarray) -> Tuple[List[int], np.ndarray]:
+    def BERTopic_train(
+        self,
+        embedding_model: SentenceTransformer,
+        documents: List[str],
+        text_embeddings: np.ndarray
+    ) -> Tuple[List[int], np.ndarray, Dict[int, List[str]]]:
 
         # Create CountVercotizer  and remove stop words
         #vectorizer_model = CountVectorizer(ngram_range=(1, 2), stop_words="english")
@@ -117,15 +122,13 @@ class TextClustering:
         )
         
         topics, probs = self.topic_model.fit_transform(documents, text_embeddings)
-        #print(topics)
-        print(probs)
 
         #print(self.topic_model.get_topic(0))
-        #print(self.topic_model.get_topic(1))
-        #print(self.topic_model.get_topic(2))
 
         df_topics = self.topic_model.get_topic_info()
         print(df_topics)
-        print(df_topics.Representative_Docs[1])
 
-        return topics, probs
+        # Create a dictionary of {topic_id: list of keywrods} for further manipulations
+        keywords_mapper = {topic: keywords for topic, keywords in zip(df_topics["Topic"], df_topics["Representation"])}
+
+        return topics, probs, keywords_mapper
