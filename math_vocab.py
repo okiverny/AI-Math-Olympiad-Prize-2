@@ -109,7 +109,7 @@ algebra_sequences_words = [
 math_words.extend(algebra_sequences_words)
 
 # 4. Number Theory – Modular arithmetic, prime numbers, divisibility rules, Diophantine equations.
-algebra_sequences_words = [
+algebra_number_words = [
     # Modular Arithmetic
     "modular", "modulo", "congruence", "residue", "inverse",
     "mod", "remainder", "division", "divisibility", "modulus",
@@ -145,7 +145,7 @@ algebra_sequences_words = [
     "Mersenne", "Sophie", "Lucas", "Vandermonde", "Chebyshev",
     "Kronecker", "Pascal", "Newton", "Catalan", "Waring"
 ]
-math_words.extend(algebra_sequences_words)
+math_words.extend(algebra_number_words)
 
 # 5. Combinatorial Algebra – Summation identities, generating functions, binomial coefficients.
 algebra_combinatorics_words = [
