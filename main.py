@@ -7,7 +7,7 @@ from hdbscan import HDBSCAN
 from sklearn.cluster import KMeans
 
 from DataLoader import MathProblemsDataset
-from DataEmbedding import MathDataEmbedding
+#from DataEmbedding import MathDataEmbedding
 from TopicModeling import TextClustering
 from plotting import (
     plot_clusters,
@@ -45,8 +45,8 @@ def main():
     mpds.data = dataset.add_column(name="clusters", column=clusters)
     #print(mpds.data.features)
 
-    classes, probs, keywords = clustering_model.BERTopic_train(encoder_model, problems, problems_embedded)
-    mpds.data = dataset.add_column(name="clusters_BERTopic", column=classes)
+    clusters, probs, keywords = clustering_model.BERTopic_train(encoder_model, problems, problems_embedded)
+    mpds.data = dataset.add_column(name="clusters_BERTopic", column=clusters)
 
     # Exemine clusters (printing problems with or without solutions)
     mpds.exemine_clusters('clusters_BERTopic', show_solution=False)
@@ -73,9 +73,25 @@ def main():
     queries = ["This problem is related to geometry and involves triangles and circles.",
                "This problem is related to the analysis of functions.",
                "This problem is related to operations with complex numbers.",
-               "This problem is related to series expansions"]
+               "This problem is related to series expansions",
+               "This problem is related to finding numbers with certain properties of their digits.",
+               "This problem is about solving polynomial equations.",
+               "This problem is related to sequences such as arithmetic and geometric progressions.",
+               "This problem is related to sets and subsets.",
+               "This problem is related to inequalities.",
+               "This problem involves recurrence relations.",
+               "This problem is related to combinatorial algebra.",
+               "This problem involves trigonometric functions.",
+               "This problem is related to Graph Theory.",
+               "This problem is related to Probability and Expected Value.",
+               "This problem is involves real-world situations and requires analytical thinking."]
 
-    print(clustering_model.topic_model.transform(queries))
+
+    query_topics, query_probs = clustering_model.topic_model.transform(queries)
+    for i, query in enumerate(queries):
+        print(f"\nQuery: {query}")
+        print(f"Class: {query_topics[i]}, Prob: {query_probs[i]}")
+        print(f"Keywords: {clustering_model.topic_model.get_topic(query_topics[i])}")
 
 
 
